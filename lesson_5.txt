@@ -1,0 +1,110 @@
+---------------------------------------  1  ------------------------------------------------
+touch script_del_str.sh
+chmod +x script_del_str.sh
+sh script_del_str.sh
+
+
+#!/bin/bash
+
+echo "Введите имя обрататываемого файла: "
+read file_name
+
+echo "Имя файла ${file_name}"
+
+sed '/^$/d' "${file_name}" > "${file_name}.handled"
+cat "${file_name}.handled" | tr [a-z] [A-Z] > "${file_name}.handled"
+
+echo "Файл обработан, строки удалены, регистр изменен, результат в файле ${file_name}.handled"
+
+
+
+
+---------------------------------------  2  ------------------------------------------------
+touch script_auth.sh
+chmod +x script_auth.sh
+sh script_auth.sh
+
+
+#!bin/bash
+
+tail -f /var/log/auth.log | grep "Authentication failure" &grep
+
+
+
+
+---------------------------------------  3  ------------------------------------------------
+touch script_newdir.sh
+chmod +x script_newdir.sh
+sh script_newdir.sh
+
+
+#!bin/bash
+
+if [ "$1" == "-d"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
