@@ -40,6 +40,12 @@ Django version 2.0.8, using settings 'demo.settings'
 Starting development server at http://0.0.0.0:8000/
 Quit the server with CONTROL-C.
 ```
+Проверяем работу http://arkada.jumpingcrab.com:8000
+
+Оставляем работать
+```
+snuffy@linux-learn:~/linux-learn/homework_07/django-test-app$ docker run -tdp 8000:8000 arkada/django_test_app
+```
 Логинимся на https://hub.docker.com
 ```
 snuffy@linux-learn:~/linux-learn/homework_07/django-test-app$ docker login
@@ -51,7 +57,7 @@ Configure a credential helper to remove this warning. See
 https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 Login Succeeded
 ```
-Публикация
+Публикация https://hub.docker.com/r/arkada/django_test_app
 ```
 snuffy@linux-learn:~/linux-learn/homework_07/django-test-app$ docker push arkada/django_test_app
 The push refers to repository [docker.io/arkada/django_test_app]
