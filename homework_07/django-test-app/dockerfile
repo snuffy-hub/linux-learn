@@ -1,0 +1,7 @@
+FROM python:alpine
+
+COPY . /home/snuffy/linux-learn/homework_07/django-test-app
+WORKDIR /home/snuffy/linux-learn/homework_07/django-test-app
+RUN pip install -r /home/snuffy/linux-learn/homework_07/django-test-app/requirements.txt
+
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
