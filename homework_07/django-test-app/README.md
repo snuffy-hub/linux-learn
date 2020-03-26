@@ -42,9 +42,13 @@ Quit the server with CONTROL-C.
 ```
 Проверяем работу http://arkada.jumpingcrab.com:8000
 
-Оставляем работать
+Избавляемся от ошибки миграции, разворачиваем таблицы в файл БД 
 ```
-snuffy@linux-learn:~/linux-learn/homework_07/django-test-app$ docker run -tdp 8000:8000 arkada/django_test_app
+docker run -itp 8000:8000 arkada/django_test_app python manage.py migrate 
+```
+Шарим файл БД в контейнер запускаем и оставляем его работать 
+```
+docker run -tdp 8000:8000 -v /home/snuffy/linux-learn/homework_07/django-test-app/db.sqlite3:/home/snuffy/linux-learn/homework_07/django-test-app/db.sqlite3 arkada/django_test_app
 ```
 Логинимся на https://hub.docker.com
 ```
