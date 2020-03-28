@@ -1,12 +1,31 @@
 ### Запуск тестового python (flask) приложения, используя docker+nginx+uWSGI (как на production)
 
-Подготовка файлов Docker-образа приложения
+В помощь: https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04-ru
+
+Подготовка файлов Docker-образа приложения:
+Создадим точку входа нашего приложения wsgi.py
 ```
-snuffy@linux-learn:/opt/flask_test_app$ ls -l
-total 12
--rw-rw-r-- 1 snuffy snuffy  247 мар 26 15:37 Dockerfile
--rw-rw-r-- 1 snuffy snuffy 2133 мар 26 15:37 flask-app.py
--rw-rw-r-- 1 snuffy snuffy   95 мар 26 15:37 requirements.txt
+from flask-app import app
+
+if __name__ == "__main__":
+    app.run()
+```
+В файл requirements.txt добавим зависимость uWSGI=2.0.18
+Dockerfile:
+```
+FROM python:alpine
+
+COPY flask-app.py  /opt/flask-app.py
+COPY wsgi.py /opt/wsgi.py
+WORKDIR /opt/
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
+RUN chmod +x /opt/flask-app.py
+RUN chmod +x /opt/wsgi.py
+RUN rm -rf /tmp/requirements.txt
+
+CMD ["/opt/flask-app.py"]
+CMD uWSGI --workers 2 --bind unix:socket/flaskapp.sock wsgi:app
 ```
 Собираем Docker image приложения
 ```
@@ -99,26 +118,22 @@ snuffy@linux-learn:/opt/flask_test_app$ ip a
 Делаем конфиг nginx 
 ```
 server {
-    listen    80;
-    listen    [::]:80;
-    listen    443;
-    listen    [::]:443;
-    server_name ubuntu  arkada.jumpingcrab.com;
-    
-    access_log /var/log/nginx.access_log main; 
-    
+    listen       80;
+    listen       [::]:80;
+    server_name ubuntu arkada.jumpingcrab.com;
+	
     location / {
-        proxy_pass http://127.0.0.1/;
-        }
+        include uwsgi_params;
+        uwsgi_pass unix:/opt/flask_test_app/flaskapp.sock;
+    }
 }
-
 ```
-и запускаем в контейнере
+и запускаем его в контейнере
 ```
-
+docker run --network=flas_bridge --hostname nginx --name nginx_fa -ti -p 80:80 -v $(pwd)/nginx_fa.conf:/et/nginx/conf.d/nginx_fa.conf nginx-alpine:latest
 ```
 flaskapp запускаем в контейнере
 ```
-
+docker run -e FLASK_HOST=0.0.0.0 --network=flas_bridge --name flask_app --rm -td flask_app:latest
 ```
 
