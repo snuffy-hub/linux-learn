@@ -1,6 +1,9 @@
 ### Запуск тестового python (flask) приложения, используя docker+nginx+uWSGI (как на production)
 
-В помощь: https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04-ru
+В помощь:
+Справочник на русском https://dker.ru/docs/docker-engine/engine-reference/dockerfile-reference/
+uWSGI Quick Start https://uwsgi-docs.readthedocs.io/en/latest/WSGIquickstart.html
+https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uswgi-and-nginx-on-ubuntu-18-04-ru
 
 Подготовка файлов Docker-образа приложения:
 Создадим точку входа нашего приложения wsgi.py
